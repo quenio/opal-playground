@@ -27,16 +27,16 @@ class Tool < View
     super(params.merge(classes: %w[border ml-auto]))
     @style.width = '10em'
     @style.height = '10em'
-    init_resizing_width
+    support_resizing
   end
 
   private
 
-  def init_resizing_width
+  def support_resizing
     on :mousedown, &method(:start_resizing)
     on :mouseup, &method(:stop_resizing)
-    on :mousemove, &method(:check_resizing_width)
-    on :mouseout, &method(:check_resizing_width)
+    on :mousemove, &method(:check_resizing)
+    on :mouseout, &method(:check_resizing)
   end
 
   def start_resizing
@@ -47,7 +47,7 @@ class Tool < View
     $space.stop_resizing(self)
   end
 
-  def check_resizing_width(event)
+  def check_resizing(event)
     rect = event.target.getBoundingClientRect
 
     leftDelta = event.clientX - rect.left

@@ -24,26 +24,44 @@ require 'view'
 
 class Space < View
   def initialize(params = {})
-    super(params.merge(element: $doc.body, classes: 'd-flex'))
-    on :mousemove, &method(:resize_width)
+    super(params.merge(element: $doc.body, classes: %w[d-flex vw-100 vh-100]))
+    support_resizing
   end
 
-  def start_resizing_width(view)
+  def start_resizing(view, side)
     @resizing_view = view
+    @resizing_side = side
   end
 
-  def stop_resizing_width(view)
+  def stop_resizing(view)
     @resizing_view = nil if @resizing_view == view
   end
 
   private
 
-  def resize_width(event)
+  def support_resizing
+    on :mousemove, &method(:resize_view)
+    on :mouseup do
+      stop_resizing @resizing_view if @resizing_view
+    end
+  end
+
+  def resize_view(event)
     return unless @resizing_view
 
     rect = @resizing_view.element.getBoundingClientRect
-    x = event.clientX - rect.left
-    @resizing_view.style.width = (rect.width - x).to_s + 'px'
+
+    case @resizing_side
+    when :left
+      width = rect.width - (event.clientX - rect.left)
+      @resizing_view.style.width = width.to_s + 'px'
+    when :bottom
+      height = rect.height - (rect.bottom - event.clientY)
+      @resizing_view.style.height = height.to_s + 'px'
+    else
+      raise 'Resizing direction not specified.'
+    end
+
     @resizing_view.style.cursor = 'col-resize'
   end
 end
