@@ -27,32 +27,30 @@ class Tool < View
     super(params.merge(classes: %w[border ml-auto]))
     @style.width = '10em'
     @style.height = '10em'
-    on :mousedown, &method(:enable_resizing)
-    on :mouseup, &method(:disable_resizing)
-    on :mousemove, &method(:resize_width)
-    on :mouseout, &method(:resize_width)
+    init_resizing_width
   end
 
   private
 
-  def enable_resizing
-    @resizing = true
+  def init_resizing_width
+    on :mousedown, &method(:start_resizing_width)
+    on :mouseup, &method(:stop_resizing_width)
+    on :mousemove, &method(:check_resizing_width)
+    on :mouseout, &method(:check_resizing_width)
   end
 
-  def disable_resizing
-    @resizing = false
+  def start_resizing_width
+    $space.start_resizing_width(self) if @width_anchored
   end
 
-  def resize_width(event)
+  def stop_resizing_width
+    $space.stop_resizing_width(self) if @width_anchored
+  end
+
+  def check_resizing_width(event)
     rect = event.target.getBoundingClientRect
     x = event.clientX - rect.left
-    if @resizing and @width_anchored
-      @style.width = (rect.width - x).to_s + 'px'
-      @style.cursor = 'col-resize'
-    else
-      @width_anchored = x.between? 0, 2
-      @style.cursor = @width_anchored ? 'col-resize' : nil
-      @resizing = false unless @width_anchored
-    end
+    @width_anchored = x.between? 0, 2
+    @style.cursor = @width_anchored ? 'col-resize' : nil
   end
 end

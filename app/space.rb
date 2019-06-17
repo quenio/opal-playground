@@ -25,6 +25,26 @@ require 'view'
 class Space < View
   def initialize(params = {})
     super(params.merge(element: $doc.body, classes: 'd-flex'))
+    on :mousemove, &method(:resize_width)
+  end
+
+  def start_resizing_width(view)
+    @resizing_view = view
+  end
+
+  def stop_resizing_width(view)
+    @resizing_view = nil if @resizing_view == view
+  end
+
+  private
+
+  def resize_width(event)
+    return unless @resizing_view
+
+    rect = @resizing_view.element.getBoundingClientRect
+    x = event.clientX - rect.left
+    @resizing_view.style.width = (rect.width - x).to_s + 'px'
+    @resizing_view.style.cursor = 'col-resize'
   end
 end
 
