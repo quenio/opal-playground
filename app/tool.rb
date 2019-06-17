@@ -33,24 +33,38 @@ class Tool < View
   private
 
   def init_resizing_width
-    on :mousedown, &method(:start_resizing_width)
-    on :mouseup, &method(:stop_resizing_width)
+    on :mousedown, &method(:start_resizing)
+    on :mouseup, &method(:stop_resizing)
     on :mousemove, &method(:check_resizing_width)
     on :mouseout, &method(:check_resizing_width)
   end
 
-  def start_resizing_width
-    $space.start_resizing_width(self) if @width_anchored
+  def start_resizing
+    $space.start_resizing(self, @resizing_side) if @resizing_side
   end
 
-  def stop_resizing_width
-    $space.stop_resizing_width(self) if @width_anchored
+  def stop_resizing
+    $space.stop_resizing(self)
   end
 
   def check_resizing_width(event)
     rect = event.target.getBoundingClientRect
-    x = event.clientX - rect.left
-    @width_anchored = x.between? 0, 2
-    @style.cursor = @width_anchored ? 'col-resize' : nil
+
+    leftDelta = event.clientX - rect.left
+    bottomDelta = event.clientY - rect.bottom
+
+    @resizing_side =
+      if leftDelta.between? 0, 2
+        :left
+      elsif bottomDelta.between? -2, 0
+        :bottom
+      end
+
+    @style.cursor =
+      if @resizing_side == :left
+        'col-resize'
+      elsif @resizing_side == :bottom
+        'row-resize'
+      end
   end
 end
