@@ -31,14 +31,14 @@ class View
   end
 
   def on(event_type)
-    @element.addEventListener event_type do
-      yield self
+    @element.addEventListener event_type do |event|
+      yield Native::Object.new(event)
     end
   end
 end
 
 $doc.addEventListener 'DOMContentLoaded' do
-  $doc_view ||= View.new(element: $doc.body)
+  $doc_view ||= View.new(element: $doc.body, classes: 'd-flex')
   start
 end
 
