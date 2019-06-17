@@ -24,6 +24,22 @@ require 'view'
 
 class Tool < View
   def initialize(params = {})
-    super(params.merge(classes: ['border']))
+    super(params.merge(classes: %w[border ml-auto]))
+    @style.width = '10em'
+    @style.height = '10em'
+    on :mousemove, &method(:resize_width)
+    on :mouseout, &method(:resize_width)
+  end
+
+  private
+
+  def resize_width(event)
+    rect = event.target.getBoundingClientRect
+    x = event.clientX - rect.left
+    if @resizing_width
+      @style.width = (rect.width - x).to_s + 'px'
+    else
+      @resizing_width = x.between? 0, 2
+    end
   end
 end
