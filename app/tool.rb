@@ -23,4 +23,7 @@
 require 'view'
 
 class Tool < View
+  def initialize(params = {})
+    super(params.merge(classes: ['border']))
+  end
 end

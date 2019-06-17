@@ -2,6 +2,9 @@
 
 require 'opal'
 require 'native'
+require 'jquery-3.4.1.min'
+require 'popper'
+require 'bootstrap-sprockets'
 
 $doc = $$.document
 
@@ -15,6 +18,8 @@ class View
     @element ||= $doc.createElement(params[:tag] || 'div')
 
     @style = @element.style
+
+    @element.classList.add(*params[:classes]) if params[:classes]
 
     self.parent = params[:parent] || $doc_view if @element != $doc.body
   end
