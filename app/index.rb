@@ -1,9 +1,11 @@
-require 'doc'
+# frozen_string_literal: true
+
+require 'view'
 
 def start
-  on 'btn-add', 'click' do
-    span do
-      "Hello!"
-    end
+  View.new(id: 'btn-add').on 'click' do
+    view = View.new
+    view.style.backgroundColor = 'red'
+    view.style.height = '500em'
   end
 end
