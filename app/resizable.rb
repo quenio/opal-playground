@@ -20,19 +20,43 @@
 #++
 #
 
-require 'view'
-require 'resizer'
 
-class Space < View
-  include Resizer
+module Resizable
+  private
 
-  def initialize(params = {})
-    super(params.merge(element: $doc.body, classes: %w[d-flex vw-100 vh-100]))
-    support_resizing
+  def support_resizing
+    on :mousedown, &method(:start_resizing)
+    on :mouseup, &method(:stop_resizing)
+    on :mousemove, &method(:check_resizing)
+    on :mouseout, &method(:check_resizing)
   end
-end
 
-$doc.addEventListener 'DOMContentLoaded' do
-  $space = Space.new
-  start
+  def start_resizing
+    $space.start_resizing(self, @resizing_side) if @resizing_side
+  end
+
+  def stop_resizing
+    $space.stop_resizing(self)
+  end
+
+  def check_resizing(event)
+    rect = event.target.getBoundingClientRect
+
+    left_delta = event.clientX - rect.left
+    bottom_delta = event.clientY - rect.bottom
+
+    @resizing_side =
+      if left_delta.between? 0, 2
+        :left
+      elsif bottom_delta.between? -2, 0
+        :bottom
+      end
+
+    @style.cursor =
+      if @resizing_side == :left
+        'col-resize'
+      elsif @resizing_side == :bottom
+        'row-resize'
+      end
+  end
 end

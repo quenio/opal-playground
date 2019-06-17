@@ -21,50 +21,15 @@
 #
 
 require 'view'
+require 'resizable'
 
 class Tool < View
+  include Resizable
+
   def initialize(params = {})
     super(params.merge(classes: %w[border ml-auto]))
     @style.width = '10em'
     @style.height = '10em'
     support_resizing
-  end
-
-  private
-
-  def support_resizing
-    on :mousedown, &method(:start_resizing)
-    on :mouseup, &method(:stop_resizing)
-    on :mousemove, &method(:check_resizing)
-    on :mouseout, &method(:check_resizing)
-  end
-
-  def start_resizing
-    $space.start_resizing(self, @resizing_side) if @resizing_side
-  end
-
-  def stop_resizing
-    $space.stop_resizing(self)
-  end
-
-  def check_resizing(event)
-    rect = event.target.getBoundingClientRect
-
-    leftDelta = event.clientX - rect.left
-    bottomDelta = event.clientY - rect.bottom
-
-    @resizing_side =
-      if leftDelta.between? 0, 2
-        :left
-      elsif bottomDelta.between? -2, 0
-        :bottom
-      end
-
-    @style.cursor =
-      if @resizing_side == :left
-        'col-resize'
-      elsif @resizing_side == :bottom
-        'row-resize'
-      end
   end
 end
