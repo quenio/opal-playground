@@ -1,3 +1,9 @@
-require 'opal'
+require 'doc'
 
-puts "Hello!"
+def start
+  on 'btn-add', 'click' do
+    span do
+      "Hello!"
+    end
+  end
+end
