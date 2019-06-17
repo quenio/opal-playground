@@ -22,37 +22,13 @@
 
 require 'view'
 
-class Tool < View
+class Space < View
   def initialize(params = {})
-    super(params.merge(classes: %w[border ml-auto]))
-    @style.width = '10em'
-    @style.height = '10em'
-    on :mousedown, &method(:enable_resizing)
-    on :mouseup, &method(:disable_resizing)
-    on :mousemove, &method(:resize_width)
-    on :mouseout, &method(:resize_width)
+    super(params.merge(element: $doc.body, classes: 'd-flex'))
   end
+end
 
-  private
-
-  def enable_resizing
-    @resizing = true
-  end
-
-  def disable_resizing
-    @resizing = false
-  end
-
-  def resize_width(event)
-    rect = event.target.getBoundingClientRect
-    x = event.clientX - rect.left
-    if @resizing and @width_anchored
-      @style.width = (rect.width - x).to_s + 'px'
-      @style.cursor = 'col-resize'
-    else
-      @width_anchored = x.between? 0, 2
-      @style.cursor = @width_anchored ? 'col-resize' : nil
-      @resizing = false unless @width_anchored
-    end
-  end
+$doc.addEventListener 'DOMContentLoaded' do
+  $space = Space.new
+  start
 end

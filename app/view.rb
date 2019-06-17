@@ -21,7 +21,7 @@ class View
 
     @element.classList.add(*params[:classes]) if params[:classes]
 
-    self.parent = params[:parent] || $doc_view if @element != $doc.body
+    self.parent = params[:parent] || $space if @element != $doc.body
   end
 
   def parent=(view)
@@ -35,10 +35,5 @@ class View
       yield Native::Object.new(event)
     end
   end
-end
-
-$doc.addEventListener 'DOMContentLoaded' do
-  $doc_view ||= View.new(element: $doc.body, classes: 'd-flex')
-  start
 end
 
