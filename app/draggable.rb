@@ -24,11 +24,16 @@ module Draggable
   def support_dragging
     @element.setAttribute 'draggable', 'true'
     on 'dragstart', &method(:drag_start)
+    on 'dragend', &method(:drag_end)
   end
 
   private
 
   def drag_start(event)
     event.target.style.color = 'red'
+  end
+
+  def drag_end(event)
+    event.target.style.color = nil
   end
 end
