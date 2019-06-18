@@ -44,6 +44,14 @@ class View
     list.add(*classes)
   end
 
+  def add_style_class(style_class)
+    @element.classList.add style_class
+  end
+
+  def remove_style_class(style_class)
+    @element.classList.remove style_class
+  end
+
   def on(event_type)
     @element.addEventListener event_type do |event|
       yield Native::Object.new(event), self
