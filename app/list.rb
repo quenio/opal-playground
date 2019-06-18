@@ -50,7 +50,7 @@ class List < View
     item_parent = View.new(
       parent: self,
       tag: 'li',
-      fixed_style_classes: %w[list-group-item m-0 p-0]
+      fixed_style_classes: %w[list-group-item border-0 m-0 p-0]
     )
     item_view = @item_view.call(item)
     if item_view.is_a? View
