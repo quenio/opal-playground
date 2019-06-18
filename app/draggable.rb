@@ -20,41 +20,15 @@
 #++
 #
 
-require 'tool'
-require 'list'
-require 'draggable'
-
-class Palette < Tool
-  def initialize(params = {})
-    super(params.merge(title: 'Palette'))
-
-    List.new(
-      parent: self,
-      flush: true,
-      fixed_style_classes: %w[mt-1],
-      item_view: method(:item_view),
-      items: params[:items] || []
-    )
+module Draggable
+  def support_dragging
+    @element.setAttribute 'draggable', 'true'
+    on 'dragstart', &method(:drag_start)
   end
 
   private
 
-  class ItemView < View
-    include Draggable
-
-    def initialize(item)
-      super(fixed_style_classes: %w[border border-light rounded bg-light text-center m-1 p-1])
-      @item = item
-      self.text = caption
-      support_dragging
-    end
-
-    def caption
-      @item.respond_to?(:caption) ? @item.caption : @item.class.to_s
-    end
-  end
-
-  def item_view(item)
-    ItemView.new(item)
+  def drag_start(event)
+    event.target.style.color = 'red'
   end
 end
