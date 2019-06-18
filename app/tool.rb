@@ -38,4 +38,15 @@ class Tool < View
 
     support_resizing
   end
+
+  BORDER_STYLES = {
+    right: %w[border-left],
+    left: %w[border-right],
+    top: %w[border-bottom],
+    bottom: %w[border-top]
+  }.freeze
+
+  def fixed_style_classes
+    BORDER_STYLES[@docking_side]
+  end
 end

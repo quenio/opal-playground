@@ -32,7 +32,12 @@ class View
   def style_classes=(classes)
     list = @element.classList
     list.remove list.item(0) while list.length > 0
+    list.add(*fixed_style_classes) unless fixed_style_classes.empty?
     list.add(*classes)
+  end
+
+  def fixed_style_classes
+    []
   end
 
   def on(event_type)

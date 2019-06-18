@@ -21,17 +21,15 @@
 #
 
 module Dockable
+  DOCKING_STYLES = {
+    right: %w[ml-auto h-100],
+    left: %w[mr-auto h-100],
+    top: %w[mb-auto],
+    bottom: %w[mt-auto w-100]
+  }.freeze
+
   def docking_side=(value)
     @docking_side = value
-    self.style_classes =
-      if @docking_side == :right
-        %w[border ml-auto h-100]
-      elsif @docking_side == :left
-        %w[border mr-auto h-100]
-      elsif @docking_side == :top
-        %w[border mb-auto w-100]
-      elsif @docking_side == :bottom
-        %w[border mt-auto w-100]
-      end
+    self.style_classes = DOCKING_STYLES[@docking_side]
   end
 end
