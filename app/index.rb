@@ -2,14 +2,16 @@
 
 require 'space'
 require 'palette'
+require 'object_spec'
 
 def start
   items = [
-    View.new(text: 'Hello, World!', caption: 'Hello')
+    ObjectSpec.new(
+      caption: 'Hello',
+      class_name: View.to_s,
+      text: 'Hello, world!'
+    )
   ]
-  items.each do |item|
-    item.parent = nil
-  end
   with Palette.new(items: items) do
     style.width = '10em'
     style.height = '10em'
