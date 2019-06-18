@@ -33,10 +33,7 @@ class List < View
 
     @item_view = params[:item_view] || method(:item_view)
 
-    params[:items].each do |item|
-      item_view = View.new(parent: self, tag: 'li', fixed_style_classes: 'list-group-item')
-      item_view.text = @item_view.call(item)
-    end
+    params[:items].each &method(:create_item)
   end
 
   def item_view(item)
@@ -46,4 +43,21 @@ class List < View
   def flush=(value)
     self.style_classes = value ? %w[list-group-flush] : []
   end
+
+  private
+
+  def create_item(item)
+    item_parent = View.new(
+      parent: self,
+      tag: 'li',
+      fixed_style_classes: %w[list-group-item m-0 p-0]
+    )
+    item_view = @item_view.call(item)
+    if item_view.is_a? View
+      item_view.parent = item_parent
+    else
+      item_parent.text = item_view.to_s
+    end
+  end
+
 end
