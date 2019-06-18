@@ -10,6 +10,7 @@ $doc = $$.document
 class View
 
   attr_reader :element, :style, :parent
+  attr_reader :fixed_style_classes
 
   def initialize(params = {})
     @element = params[:element]
@@ -17,9 +18,9 @@ class View
     @element ||= $doc.createElement(params[:tag] || 'div')
 
     @style = @element.style
+    @fixed_style_classes = params[:fixed_style_classes] || []
 
-    self.style_classes = params[:style_classes] if params[:style_classes]
-
+    self.style_classes = params[:style_classes] || []
     self.parent = params[:parent] || $space if @element != $doc.body
   end
 
@@ -29,15 +30,15 @@ class View
     @parent.element.appendChild @element
   end
 
+  def text=(value)
+    @element.innerHTML = value
+  end
+
   def style_classes=(classes)
     list = @element.classList
     list.remove list.item(0) while list.length > 0
-    list.add(*fixed_style_classes) unless fixed_style_classes.empty?
+    list.add(*fixed_style_classes) unless fixed_style_classes&.empty?
     list.add(*classes)
-  end
-
-  def fixed_style_classes
-    []
   end
 
   def on(event_type)
