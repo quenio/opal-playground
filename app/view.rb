@@ -23,13 +23,14 @@ class View
     @caption = params[:caption] || self.class.to_s
 
     self.style_classes = params[:style_classes] || []
+    self.text = params[:text] if params[:text]
     self.parent = params[:parent] || $space if @element != $doc.body
   end
 
   def parent=(view)
-    @parent&.removeChild @element
+    @parent&.element&.removeChild @element
     @parent = view
-    @parent.element.appendChild @element
+    @parent&.element&.appendChild @element
   end
 
   def text=(value)
