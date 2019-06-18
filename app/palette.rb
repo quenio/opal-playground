@@ -36,7 +36,13 @@ class Palette < Tool
     )
   end
 
-  def item_view(item)
+  private
+
+  def caption(item)
     item.respond_to?(:caption) ? item.caption : item.class.to_s
+  end
+
+  def item_view(item)
+    View.new(text: caption(item), fixed_style_classes: %w[p-1])
   end
 end
