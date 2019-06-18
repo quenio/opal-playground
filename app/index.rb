@@ -7,6 +7,6 @@ def start
   with Tool.new(title: 'Palette') do
     style.width = '10em'
     style.height = '10em'
-    docking_side = :right
+    self.docking_side = :right
   end
 end
