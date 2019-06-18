@@ -46,7 +46,7 @@ class View
 
   def on(event_type)
     @element.addEventListener event_type do |event|
-      yield Native::Object.new(event)
+      yield Native::Object.new(event), self
     end
   end
 end
