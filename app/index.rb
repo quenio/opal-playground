@@ -7,7 +7,6 @@ require 'view_spec'
 require 'input'
 
 def start
-  Sheet.new
   items = [
     ViewSpec.new(
       caption: 'Input',
@@ -17,6 +16,7 @@ def start
   with Palette.new(items: items) do
     style.width = '15em'
     style.height = '10em'
-    self.docking_side = :right
+    self.docking_side = :left
   end
+  Sheet.new
 end
