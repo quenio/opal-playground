@@ -31,6 +31,7 @@ class Tool < View
 
     @style.width = '10em'
     @style.height = '10em'
+    @style.backgroundColor = 'red'
 
     self.docking_side = params[:docking_side] || :left
 
@@ -46,6 +47,8 @@ class Tool < View
         %w[border mr-auto h-100]
       elsif @docking_side == :top
         %w[border mb-auto w-100]
+      elsif @docking_side == :bottom
+        %w[border mt-auto w-100]
       end
   end
 end

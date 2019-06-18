@@ -45,20 +45,23 @@ module Resizable
     left_delta = event.clientX - rect.left
     right_delta = event.clientX - rect.right
     bottom_delta = event.clientY - rect.bottom
+    top_delta = event.clientY - rect.top
 
     @resizing_side =
-      if left_delta.between? 0, 2
+      if left_delta.between?(0, 2)
         :left
       elsif right_delta.between?(-2, 0)
         :right
       elsif bottom_delta.between?(-2, 0)
         :bottom
+      elsif top_delta.between?(0, 2)
+        :top
       end
 
     @style.cursor =
       if %i[left right].include?(@resizing_side)
         'col-resize'
-      elsif @resizing_side == :bottom
+      elsif %i[top bottom].include?(@resizing_side)
         'row-resize'
       end
   end
