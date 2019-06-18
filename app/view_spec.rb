@@ -22,12 +22,20 @@
 
 require 'corelib_ext'
 
-class ObjectSpec
+class ViewSpec
   attr_reader :caption, :class_name, :attributes
 
   def initialize(params = {})
     @class_name = params[:class_name] || Object.to_s
     @caption = params[:caption] || @class_name
     @attributes = params.except(:caption, :class_name)
+  end
+
+  def create_view(params = {})
+    Object.const_get(@class_name).new(@attributes.merge(params))
+  end
+
+  def to_h
+    @attributes.merge(class_name: @class_name)
   end
 end
