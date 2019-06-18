@@ -34,7 +34,7 @@ class Tool < View
 
     self.docking_side = params[:docking_side] || :left
 
-    @header = Header.new(parent: self, text: (params[:title] || 'No Title'))
+    Header.new(parent: self, text: (params[:title] || 'No Title'))
 
     support_resizing
   end
