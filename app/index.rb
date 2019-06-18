@@ -1,19 +1,21 @@
 # frozen_string_literal: true
 
 require 'space'
+require 'sheet'
 require 'palette'
-require 'object_spec'
+require 'view_spec'
 
 def start
+  Sheet.new
   items = [
-    ObjectSpec.new(
+    ViewSpec.new(
       caption: 'Hello',
       class_name: View.to_s,
       text: 'Hello, world!'
     )
   ]
   with Palette.new(items: items) do
-    style.width = '10em'
+    style.width = '15em'
     style.height = '10em'
     self.docking_side = :right
   end
