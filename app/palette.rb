@@ -52,6 +52,10 @@ class Palette < Tool
     def caption
       @item.respond_to?(:caption) ? @item.caption : @item.class.to_s
     end
+
+    def spec
+      @item.is_a?(ViewSpec) ? @item.to_h : @item.to_s
+    end
   end
 
   def item_view(item)
