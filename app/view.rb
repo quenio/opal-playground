@@ -1,7 +1,6 @@
 # frozen_string_literal: true
 
-require 'opal'
-require 'native'
+require 'blocks'
 require 'jquery-3.4.1.min'
 require 'popper'
 require 'bootstrap-sprockets'
@@ -33,7 +32,7 @@ class View
   def style_classes=(classes)
     list = @element.classList
     list.remove list.item(0) while list.length > 0
-    list.add *classes
+    list.add(*classes)
   end
 
   def on(event_type)

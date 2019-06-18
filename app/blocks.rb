@@ -20,31 +20,12 @@
 #++
 #
 
-require 'view'
-require 'resizable'
+require 'opal'
+require 'native'
 
-class Tool < View
-  include Resizable
-
-  def initialize(params = {})
-    super(params)
-
-    self.docking_side = params[:docking_side] || :left
-
-    support_resizing
-  end
-
-  def docking_side=(value)
-    @docking_side = value
-    self.style_classes =
-      if @docking_side == :right
-        %w[border ml-auto h-100]
-      elsif @docking_side == :left
-        %w[border mr-auto h-100]
-      elsif @docking_side == :top
-        %w[border mb-auto w-100]
-      elsif @docking_side == :bottom
-        %w[border mt-auto w-100]
-      end
+class BasicObject
+  def with(instance, &block)
+    instance.instance_eval(&block)
+    instance
   end
 end

@@ -4,5 +4,9 @@ require 'space'
 require 'tool'
 
 def start
-  Tool.new.docking_side = :right
+  with Tool.new do
+    style.width = '10em'
+    style.height = '10em'
+    docking_side = :right
+  end
 end
