@@ -31,7 +31,12 @@ class Palette < Tool
       parent: self,
       flush: true,
       fixed_style_classes: %w[mt-1 border-bottom],
+      item_view: method(:item_view),
       items: params[:items] || []
     )
+  end
+
+  def item_view(item)
+    item.class.to_s
   end
 end

@@ -31,10 +31,16 @@ class List < View
 
     self.flush = params[:flush] || false
 
+    @item_view = params[:item_view] || method(:item_view)
+
     params[:items].each do |item|
       item_view = View.new(parent: self, tag: 'li', fixed_style_classes: 'list-group-item')
-      item_view.text = item.to_s
+      item_view.text = @item_view.call(item)
     end
+  end
+
+  def item_view(item)
+    item.to_s
   end
 
   def flush=(value)
