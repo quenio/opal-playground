@@ -26,7 +26,7 @@ module Dockable
     left: %w[mr-auto h-100],
     top: %w[mb-auto],
     bottom: %w[mt-auto w-100]
-  }.freeze
+  }
 
   def docking_side=(value)
     @docking_side = value
