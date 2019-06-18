@@ -4,5 +4,5 @@ require 'space'
 require 'tool'
 
 def start
-  Tool.new.docking_side = :right
+  Tool.new.docking_side = :top
 end

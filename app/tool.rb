@@ -44,6 +44,8 @@ class Tool < View
         %w[border ml-auto h-100]
       elsif @docking_side == :right
         %w[border mr-auto h-100]
+      elsif @docking_side == :top
+        %w[border mb-auto w-100]
       end
   end
 end
