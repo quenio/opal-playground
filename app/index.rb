@@ -4,7 +4,10 @@ require 'space'
 require 'palette'
 
 def start
-  with Palette.new(items: ["One", "Two", "Three"]) do
+  items = [
+    View.new(text: 'Hello, World!', caption: 'Hello')
+  ]
+  with Palette.new(items: items) do
     style.width = '10em'
     style.height = '10em'
     self.docking_side = :right

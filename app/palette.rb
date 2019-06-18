@@ -37,6 +37,6 @@ class Palette < Tool
   end
 
   def item_view(item)
-    item.class.to_s
+    item.respond_to?(:caption) ? item.caption : item.class.to_s
   end
 end

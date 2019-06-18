@@ -11,6 +11,7 @@ class View
 
   attr_reader :element, :style, :parent
   attr_reader :fixed_style_classes
+  attr_reader :caption
 
   def initialize(params = {})
     @element = params[:element]
@@ -19,6 +20,7 @@ class View
 
     @style = @element.style
     @fixed_style_classes = params[:fixed_style_classes] || []
+    @caption = params[:caption] || self.class.to_s
 
     self.style_classes = params[:style_classes] || []
     self.parent = params[:parent] || $space if @element != $doc.body
