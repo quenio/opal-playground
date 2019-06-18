@@ -28,7 +28,7 @@ class Sheet < View
 
   def initialize(params = {})
     super(params.merge(
-      fixed_style_classes: %w[w-100 h-100]
+      fixed_style_classes: %w[w-100 h-100 m-1]
     ))
     support_dropping
   end
