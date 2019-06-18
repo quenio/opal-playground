@@ -21,21 +21,20 @@
 #
 
 require 'view'
-require 'resizable'
 require 'dockable'
-require 'header'
 
-class Tool < View
-  include Resizable
+class Header < View
   include Dockable
 
   def initialize(params = {})
     super(params)
 
-    self.docking_side = params[:docking_side] || :left
+    self.text = params[:text] if params[:text]
 
-    @header = Header.new(parent: self, text: (params[:title] || 'No Title'))
+    self.docking_side = :top
+  end
 
-    support_resizing
+  def text=(value)
+    @element.innerHTML = value
   end
 end
