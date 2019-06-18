@@ -4,14 +4,14 @@ require 'space'
 require 'sheet'
 require 'palette'
 require 'view_spec'
+require 'input'
 
 def start
   Sheet.new
   items = [
     ViewSpec.new(
-      caption: 'Hello',
-      class_name: View.to_s,
-      text: 'Hello, world!'
+      caption: 'Input',
+      class_name: Input.to_s
     )
   ]
   with Palette.new(items: items) do
