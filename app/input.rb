@@ -26,7 +26,7 @@ class Input < View
   def initialize(params = {})
     super(params.merge(
       tag: 'input',
-      fixed_style_classes: %w[form-control w-25],
+      fixed_style_classes: %w[form-control w-25 m-1 mb-2],
       placeholder: 'Input'
     ))
   end
