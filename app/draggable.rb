@@ -20,6 +20,8 @@
 #++
 #
 
+require 'json'
+
 module Draggable
   def support_dragging
     @element.setAttribute 'draggable', 'true'
@@ -29,8 +31,9 @@ module Draggable
 
   private
 
-  def drag_start(event)
+  def drag_start(event, view)
     event.target.style.color = 'red'
+    event.dataTransfer.setData('view_spec', view.spec.to_json)
   end
 
   def drag_end(event)
