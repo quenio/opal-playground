@@ -27,16 +27,10 @@ class Header < View
   include Dockable
 
   def initialize(params = {})
-    super(params)
+    super(params.merge(
+      fixed_style_classes: %w[bg-primary text-light rounded mt-1 ml-1 mr-1 pt-1 pb-1 pl-2 pr-2]
+    ))
     self.text = params[:text] if params[:text]
     self.docking_side = :top
-  end
-
-  def fixed_style_classes
-    %w[bg-primary text-light rounded mt-1 ml-1 mr-1 pt-1 pb-1 pl-2 pr-2]
-  end
-
-  def text=(value)
-    @element.innerHTML = value
   end
 end
