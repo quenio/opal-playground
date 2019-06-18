@@ -49,6 +49,9 @@ module Resizer
     when :left
       width = rect.width - (event.clientX - rect.left)
       @resizing_view.style.width = width.to_s + 'px'
+    when :right
+      width = rect.width + (event.clientX - rect.right)
+      @resizing_view.style.width = width.to_s + 'px'
     when :bottom
       height = rect.height - (rect.bottom - event.clientY)
       @resizing_view.style.height = height.to_s + 'px'

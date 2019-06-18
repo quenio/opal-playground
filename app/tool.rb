@@ -27,9 +27,23 @@ class Tool < View
   include Resizable
 
   def initialize(params = {})
-    super(params.merge(classes: %w[border ml-auto]))
+    super(params)
+
     @style.width = '10em'
     @style.height = '10em'
+
+    self.docking_side = params[:docking_side] || :left
+
     support_resizing
+  end
+
+  def docking_side=(value)
+    @docking_side = value
+    self.style_classes =
+      if @docking_side == :left
+        %w[border ml-auto h-100]
+      elsif @docking_side == :right
+        %w[border mr-auto h-100]
+      end
   end
 end

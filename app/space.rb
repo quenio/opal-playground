@@ -27,7 +27,7 @@ class Space < View
   include Resizer
 
   def initialize(params = {})
-    super(params.merge(element: $doc.body, classes: %w[d-flex vw-100 vh-100]))
+    super(params.merge(element: $doc.body, style_classes: %w[d-flex vw-100 vh-100]))
     support_resizing
   end
 end

@@ -19,7 +19,7 @@ class View
 
     @style = @element.style
 
-    @element.classList.add(*params[:classes]) if params[:classes]
+    self.style_classes = params[:style_classes] if params[:style_classes]
 
     self.parent = params[:parent] || $space if @element != $doc.body
   end
@@ -28,6 +28,12 @@ class View
     @parent&.removeChild @element
     @parent = view
     @parent.element.appendChild @element
+  end
+
+  def style_classes=(classes)
+    list = @element.classList
+    list.remove list.item(0) while list.length > 0
+    list.add *classes
   end
 
   def on(event_type)
