@@ -3,6 +3,7 @@
 require 'space'
 require 'sheet'
 require 'palette'
+require 'inspector'
 require 'view_spec'
 require 'input'
 
@@ -15,8 +16,10 @@ def start
   ]
   with Palette.new(items: items) do
     style.width = '15em'
-    style.height = '10em'
     self.docking_side = :left
   end
   Sheet.new
+  with Inspector.new(docking_side: :right) do
+    style.width = '15em'
+  end
 end
