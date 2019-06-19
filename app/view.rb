@@ -8,9 +8,7 @@ require 'bootstrap-sprockets'
 $doc = $$.document
 
 class View
-
-  attr_reader :element, :style, :parent
-  attr_reader :fixed_style_classes
+  attr_reader :parent
   attr_reader :caption
 
   def initialize(params = {})
@@ -37,6 +35,17 @@ class View
     @element.innerHTML = value
   end
 
+  def on(event_type)
+    @element.addEventListener event_type do |event|
+      yield Native::Object.new(event), self
+    end
+  end
+
+  private
+
+  attr_reader :element, :style
+  attr_reader :fixed_style_classes
+
   def style_classes=(classes)
     list = @element.classList
     list.remove list.item(0) while list.length > 0
@@ -50,12 +59,6 @@ class View
 
   def remove_style_class(style_class)
     @element.classList.remove style_class
-  end
-
-  def on(event_type)
-    @element.addEventListener event_type do |event|
-      yield Native::Object.new(event), self
-    end
   end
 end
 
