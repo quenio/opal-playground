@@ -11,7 +11,8 @@ def start
   items = [
     ViewSpec.new(
       caption: 'Input',
-      class_name: Input.to_s
+      class_name: Input.to_s,
+      fixed_style_classes: %w[w-25]
     )
   ]
   with Palette.new(items: items) do
@@ -19,7 +20,7 @@ def start
     self.docking_side = :left
   end
   Sheet.new
-  with Inspector.new(docking_side: :right) do
+  $inspector = with Inspector.new(docking_side: :right) do
     style.width = '15em'
   end
 end

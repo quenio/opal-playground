@@ -21,9 +21,37 @@
 #
 
 require 'tool'
+require 'input'
 
 class Inspector < Tool
   def initialize(params = {})
     super(params.merge(title: 'Inspector'))
+  end
+
+  def display(view)
+    return if view.parent == @attribute_list
+
+    @attribute_list.parent = nil if @attribute_list
+    @attribute_list = List.new(
+      parent: self,
+      flush: true,
+      fixed_style_classes: %w[mt-1],
+      item_view: method(:item_view),
+      items: view.attributes
+    )
+  end
+
+  private
+
+  def item_view(item)
+    input = Input.new(
+      placeholder: item.name.chop,
+      non_selectable: true,
+      fixed_style_classes: %w[w-auto]
+    )
+    input.on 'input' do |event|
+      item.call(event.target.value)
+    end
+    input
   end
 end
