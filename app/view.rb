@@ -84,6 +84,10 @@ class View
     end
   end
 
+  def clear
+    @element.removeChild @element.firstChild while @element.firstChild
+  end
+
   private
 
   def find_element(root, element)
