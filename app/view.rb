@@ -8,6 +8,20 @@ require 'bootstrap-sprockets'
 $doc = $$.document
 
 class View
+
+  def self.find(root)
+    data_view = root.getAttribute('data-view')
+    print data_view, "\n"
+    return Object.const_get(name).new(element: root) if data_view == name
+
+    Array(root.children).each do |element|
+      view = find(element)
+      return view if view
+    end
+
+    nil
+  end
+
   attr_reader :parent
   attr_reader :caption
 
@@ -15,6 +29,8 @@ class View
     @element = params[:element]
     @element ||= $doc.getElementById(params[:id]) if params[:id]
     @element ||= $doc.createElement(params[:tag] || 'div')
+
+    raise "Element not found for params: #{params.inspect}" unless @element
 
     @style = @element.style
     @fixed_style_classes = params[:fixed_style_classes] || []
