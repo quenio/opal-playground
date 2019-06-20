@@ -21,7 +21,7 @@
 #
 
 require 'tool'
-require 'input'
+require 'field'
 
 class Inspector < Tool
   def initialize(params = {})
@@ -41,7 +41,7 @@ class Inspector < Tool
   private
 
   def item_view(item)
-    input = Input.new(
+    input = Field.new(
       placeholder: item.name.chop,
       non_selectable: true,
       fixed_style_classes: %w[w-auto]

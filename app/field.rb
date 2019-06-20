@@ -23,7 +23,7 @@
 require 'view'
 require 'selectable'
 
-class Input < View
+class Field < View
   include Selectable
 
   attr_reader :placeholder, :variable

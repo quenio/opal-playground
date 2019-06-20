@@ -5,12 +5,12 @@ require 'sheet'
 require 'palette'
 require 'inspector'
 require 'view_spec'
-require 'input'
+require 'field'
 
 items = [
   ViewSpec.new(
-    caption: 'Input',
-    class_name: Input.to_s,
+    caption: 'Field',
+    class_name: Field.to_s,
     fixed_style_classes: %w[w-25]
   )
 ]
