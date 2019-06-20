@@ -27,12 +27,12 @@ class Space < View
   include Resizer
 
   def initialize(params = {})
-    super(params.merge(element: $doc.body, fixed_style_classes: %w[d-flex vw-100 vh-100]))
+    super(params.merge(fixed_style_classes: %w[d-flex vw-100 vh-100]))
     support_resizing
   end
 end
 
 $doc.addEventListener 'DOMContentLoaded' do
-  $space = Space.new
+  $space = Space.find($doc.body)
   start
 end
