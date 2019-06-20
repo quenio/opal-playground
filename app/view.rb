@@ -9,12 +9,12 @@ $doc = $$.document
 
 class View
 
-  def self.find(root, parent = nil)
+  def self.find(root)
     data_view = root.getAttribute('data-view')
-    return create(root, parent) if data_view == name
+    return create(root) if data_view == name
 
     Array(root.children).each do |element|
-      view = find(element, parent)
+      view = find(element)
       return view if view
     end
 
