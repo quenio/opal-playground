@@ -22,7 +22,15 @@ class View
   end
 
   def self.create(element, parent = nil)
-    new(element: element, parent: parent)
+    new(data_attributes(element).merge(element: element, parent: parent))
+  end
+
+  def self.data_attributes(element)
+    Array(element.attributes)
+      .select { |a| a.name.start_with? 'data-' }
+      .reject { |a| a.name == 'data-view' }
+      .map { |a| [a.name[5..-1].tr('-', '_'), a.value] }
+      .to_h
   end
 
   attr_reader :parent
