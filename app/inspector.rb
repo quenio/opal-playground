@@ -29,7 +29,7 @@ class Inspector < Tool
     @property_list = List.new(
       parent: self,
       flush: true,
-      fixed_style_classes: %w[mt-1],
+      fixed_style_classes: %w[mt-1 ml-2 mr-2],
       item_view: method(:item_view),
     )
   end
