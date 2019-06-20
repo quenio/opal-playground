@@ -39,7 +39,9 @@ class Field < View
   end
 
   def properties
-    [method('variable='.to_sym)]
+    %w[variable].map do |item|
+      method("#{item}=".to_sym)
+    end
   end
 
   def placeholder=(value)
