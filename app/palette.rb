@@ -28,13 +28,17 @@ class Palette < Tool
   def initialize(params = {})
     super(params.merge(title: 'Palette'))
 
-    List.new(
+    @list = List.new(
       parent: self,
       flush: true,
       fixed_style_classes: %w[mt-1],
       item_view: method(:item_view),
       items: params[:items] || []
     )
+  end
+
+  def refresh(items)
+    @list.refresh(items)
   end
 
   private

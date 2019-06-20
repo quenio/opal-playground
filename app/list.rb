@@ -33,7 +33,12 @@ class List < View
 
     @item_view = params[:item_view] || method(:item_view)
 
-    params[:items].each &method(:create_item)
+    refresh(params[:items]) if params[:items]
+  end
+
+  def refresh(items)
+    clear
+    items.each(&method(:create_item))
   end
 
   def item_view(item)
