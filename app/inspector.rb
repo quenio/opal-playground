@@ -40,14 +40,15 @@ class Inspector < Tool
 
   private
 
-  def item_view(item)
+  def item_view(property)
     input = Field.new(
-      label: item.name.chop.capitalize,
+      label: property.name,
+      value: property.value,
       non_selectable: true,
       fixed_style_classes: %w[w-auto]
     )
     input.on 'input' do |event|
-      item.call(event.target.value)
+      property.value = event.target.value
     end
     input
   end
