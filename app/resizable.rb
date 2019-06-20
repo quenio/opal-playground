@@ -32,11 +32,11 @@ module Resizable
   end
 
   def start_resizing
-    $space.start_resizing(self, @resizing_side) if @resizing_side
+    @parent.start_resizing(self, @resizing_side) if @resizing_side
   end
 
   def stop_resizing
-    $space.stop_resizing(self)
+    @parent.stop_resizing(self)
   end
 
   def check_resizing(event)
