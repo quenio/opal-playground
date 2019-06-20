@@ -49,8 +49,10 @@ class View
   def parent=(view)
     return if view == @parent
 
-    @parent&.element&.removeChild @element
     @parent = view
+    return if find_element(@parent.element, @element)
+
+    @parent&.element&.removeChild @element
     @parent&.element&.appendChild @element
   end
 
@@ -65,6 +67,13 @@ class View
   end
 
   private
+
+  def find_element(root, element)
+    Array(root.children).each do |child|
+      return true if child == element || find_element(child, element)
+    end
+    false
+  end
 
   def create_subviews(children)
     Array(children).each do |element|
