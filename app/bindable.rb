@@ -20,6 +20,30 @@
 #++
 #
 
+require 'variable'
+
 module Bindable
-  attr_accessor :variable
+  def variable
+    @variable&.name
+  end
+
+  def variable=(variable_name)
+    @variable = Variable.find_or_create(variable_name)
+    @variable&.add_observer self
+  end
+
+  def update_variable_value(new_value)
+    return unless @variable
+
+    @variable.delete_observer self
+    @variable.value = new_value
+    @variable.add_observer self
+  end
+
+  def update(variable)
+    return unless @variable
+    return unless variable == @variable
+
+    variable_value_updated(variable.value)
+  end
 end
