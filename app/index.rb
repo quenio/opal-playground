@@ -6,11 +6,18 @@ require 'palette'
 require 'inspector'
 require 'view_spec'
 require 'field'
+require 'text'
 
 items = [
   ViewSpec.new(
     caption: 'Field',
     class_name: Field.to_s,
+    fixed_style_classes: %w[w-25]
+  ),
+  ViewSpec.new(
+    caption: 'Text',
+    class_name: Text.to_s,
+    text: 'Text',
     fixed_style_classes: %w[w-25]
   )
 ]
