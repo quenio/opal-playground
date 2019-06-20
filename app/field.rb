@@ -22,6 +22,7 @@
 
 require 'view'
 require 'selectable'
+require 'property'
 
 class Field < View
   include Selectable
@@ -35,20 +36,20 @@ class Field < View
 
     @span = View.new(parent: self, tag: 'span')
     @input = View.new(
-      parent: self, tag: 'input',
+      parent: self,
+      tag: 'input',
       fixed_style_classes: %w[form-control]
     )
 
     self.variable = params[:variable]
     self.label = params[:label] || variable || 'Field'
+    self.value = params[:value] if params[:value]
 
     support_selection unless params[:non_selectable]
   end
 
   def properties
-    %w[label variable].map do |item|
-      method("#{item}=".to_sym)
-    end
+    Property.list(self, %i[label variable])
   end
 
   def label=(value)
@@ -59,5 +60,9 @@ class Field < View
   def variable=(value)
     @variable = value
     @span.text = @variable || '' unless @label
+  end
+
+  def value=(value)
+    @input.element.value = value
   end
 end
