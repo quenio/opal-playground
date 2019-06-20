@@ -25,7 +25,7 @@ require 'input'
 
 class Inspector < Tool
   def initialize(params = {})
-    super(params.merge(title: 'Inspector'))
+    super(params.merge(title: 'Properties'))
   end
 
   def display(view)
