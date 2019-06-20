@@ -7,11 +7,13 @@ require 'bootstrap-sprockets'
 
 $doc = $$.document
 
+$view_cache = {}
+
 class View
 
   def self.find(root)
     data_view = root.getAttribute('data-view')
-    return create(root) if data_view == name
+    return create_or_find(root) if data_view == name
 
     Array(root.children).each do |element|
       view = find(element)
@@ -21,8 +23,12 @@ class View
     nil
   end
 
+  def self.create_or_find(element)
+    $view_cache[element] ||= create(element)
+  end
+
   def self.create(element, parent = nil)
-    new(data_attributes(element).merge(element: element, parent: parent))
+    $view_cache[element] = new(data_attributes(element).merge(element: element, parent: parent))
   end
 
   def self.data_attributes(element)
