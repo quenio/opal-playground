@@ -9,17 +9,20 @@ $doc = $$.document
 
 class View
 
-  def self.find(root)
+  def self.find(root, parent = nil)
     data_view = root.getAttribute('data-view')
-    print data_view, "\n"
-    return Object.const_get(name).new(element: root) if data_view == name
+    return create(root, parent) if data_view == name
 
     Array(root.children).each do |element|
-      view = find(element)
+      view = find(element, parent)
       return view if view
     end
 
     nil
+  end
+
+  def self.create(element, parent = nil)
+    new(element: element, parent: parent)
   end
 
   attr_reader :parent
@@ -38,10 +41,14 @@ class View
 
     self.style_classes = params[:style_classes] || []
     self.text = params[:text] if params[:text]
-    self.parent = params[:parent] || $space if @element != $doc.body
+    self.parent = params[:parent] if params[:parent]
+
+    create_subviews(@element.children)
   end
 
   def parent=(view)
+    return if view == @parent
+
     @parent&.element&.removeChild @element
     @parent = view
     @parent&.element&.appendChild @element
@@ -58,6 +65,17 @@ class View
   end
 
   private
+
+  def create_subviews(children)
+    Array(children).each do |element|
+      data_view = element.getAttribute('data-view')
+      if data_view
+        Object.const_get(data_view).create(element, self)
+      else
+        create_subviews(element.children)
+      end
+    end
+  end
 
   attr_reader :element, :style
   attr_reader :fixed_style_classes
