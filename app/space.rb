@@ -31,8 +31,3 @@ class Space < View
     support_resizing
   end
 end
-
-$doc.addEventListener 'DOMContentLoaded' do
-  $space = Space.find($doc.body)
-  start
-end
