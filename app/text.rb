@@ -39,4 +39,10 @@ class Text < View
   def properties
     Property.list(self, %i[content variable])
   end
+
+  private
+
+  def variable_value_updated(new_value)
+    self.content = new_value
+  end
 end

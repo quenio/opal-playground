@@ -42,6 +42,9 @@ class Field < View
       tag: 'input',
       fixed_style_classes: %w[form-control]
     )
+    @input.on 'input' do |event|
+      self.value = event.target.value
+    end
 
     self.label = params[:label] || 'Field'
     self.value = params[:value] if params[:value]
@@ -58,7 +61,14 @@ class Field < View
     @span.text = @label if @label
   end
 
-  def value=(value)
-    @input.element.value = value
+  def value=(new_value)
+    @input.element.value = new_value
+    update_variable_value new_value
+  end
+
+  private
+
+  def variable_value_updated(new_value)
+    @input.element.value = new_value
   end
 end
