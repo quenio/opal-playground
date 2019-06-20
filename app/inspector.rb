@@ -26,19 +26,16 @@ require 'input'
 class Inspector < Tool
   def initialize(params = {})
     super(params.merge(title: 'Properties'))
-  end
-
-  def display(view)
-    return if view.parent == @attribute_list
-
-    @attribute_list.parent = nil if @attribute_list
-    @attribute_list = List.new(
+    @property_list = List.new(
       parent: self,
       flush: true,
       fixed_style_classes: %w[mt-1],
       item_view: method(:item_view),
-      items: view.attributes
     )
+  end
+
+  def display(view)
+    @property_list.refresh(view.properties)
   end
 
   private
