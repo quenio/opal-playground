@@ -22,10 +22,11 @@
 
 module Selectable
   def support_selection
+    @inspector = Inspector.find($doc.body)
     on 'click', &method(:select)
   end
 
   def select
-    $inspector.display self
+    @inspector.display self
   end
 end
