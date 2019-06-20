@@ -26,31 +26,38 @@ require 'selectable'
 class Field < View
   include Selectable
 
-  attr_reader :placeholder, :variable
+  attr_reader :label, :variable
 
   def initialize(params = {})
     super(params.merge(
-      tag: 'input',
-      fixed_style_classes: %w[form-control m-1 mb-2] + (params[:fixed_style_classes] || [])
+      fixed_style_classes: %w[m-1 mb-2] + (params[:fixed_style_classes] || [])
     ))
-    self.placeholder = params[:placeholder]
+
+    @span = View.new(parent: self, tag: 'span')
+    @input = View.new(
+      parent: self, tag: 'input',
+      fixed_style_classes: %w[form-control]
+    )
+
     self.variable = params[:variable]
+    self.label = params[:label] || variable || 'Field'
+
     support_selection unless params[:non_selectable]
   end
 
   def properties
-    %w[variable].map do |item|
+    %w[label variable].map do |item|
       method("#{item}=".to_sym)
     end
   end
 
-  def placeholder=(value)
-    @placeholder = value
-    @element.setAttribute :placeholder, @placeholder if @placeholder
+  def label=(value)
+    @label = value
+    @span.text = @label if @label
   end
 
   def variable=(value)
     @variable = value
-    @element.setAttribute :placeholder, @variable || '' unless @placeholder
+    @span.text = @variable || '' unless @label
   end
 end
