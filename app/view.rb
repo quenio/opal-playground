@@ -43,6 +43,8 @@ class View
 
     raise "Element not found for params: #{params.inspect}" unless @element
 
+    @element.setAttribute 'data-view', self.class.name
+
     @style = @element.style
     @fixed_style_classes = params[:fixed_style_classes] || []
     @caption = params[:caption] || self.class.to_s
