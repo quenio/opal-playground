@@ -74,8 +74,12 @@ class View
     @parent.element.appendChild @element
   end
 
+  def text
+    @element.innerHTML.to_s
+  end
+
   def text=(value)
-    @element.innerHTML = value
+    @element.innerHTML = value.to_s
   end
 
   def on(event_type)
