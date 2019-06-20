@@ -19,7 +19,6 @@ def start
     style.width = '15em'
     self.docking_side = :left
   end
-  Sheet.new
   $inspector = with Inspector.new(docking_side: :right) do
     style.width = '15em'
   end
