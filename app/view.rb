@@ -49,11 +49,13 @@ class View
   def parent=(view)
     return if view == @parent
 
+    previous_parent = @parent
     @parent = view
+    return unless @parent
     return if find_element(@parent.element, @element)
 
-    @parent&.element&.removeChild @element
-    @parent&.element&.appendChild @element
+    previous_parent&.removeChild @element
+    @parent.element.appendChild @element
   end
 
   def text=(value)
