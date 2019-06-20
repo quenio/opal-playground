@@ -23,11 +23,13 @@
 require 'view'
 require 'selectable'
 require 'property'
+require 'bindable'
 
 class Field < View
   include Selectable
+  include Bindable
 
-  attr_reader :label, :variable
+  attr_reader :label
 
   def initialize(params = {})
     super(params.merge(
@@ -41,8 +43,7 @@ class Field < View
       fixed_style_classes: %w[form-control]
     )
 
-    self.variable = params[:variable]
-    self.label = params[:label] || variable || 'Field'
+    self.label = params[:label] || 'Field'
     self.value = params[:value] if params[:value]
 
     support_selection unless params[:non_selectable]
@@ -55,11 +56,6 @@ class Field < View
   def label=(value)
     @label = value
     @span.text = @label if @label
-  end
-
-  def variable=(value)
-    @variable = value
-    @span.text = @variable || '' unless @label
   end
 
   def value=(value)

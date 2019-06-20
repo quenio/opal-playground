@@ -20,23 +20,6 @@
 #++
 #
 
-require 'view'
-require 'bindable'
-require 'property'
-
-class Text < View
-  include Selectable
-  include Bindable
-
-  def initialize(params = {})
-    super(params.merge(tag: 'span'))
-    support_selection
-  end
-
-  alias content text
-  alias content= text=
-
-  def properties
-    Property.list(self, %i[content variable])
-  end
+module Bindable
+  attr_accessor :variable
 end
