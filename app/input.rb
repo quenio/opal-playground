@@ -38,7 +38,7 @@ class Input < View
     support_selection unless params[:non_selectable]
   end
 
-  def attributes
+  def properties
     [method('variable='.to_sym)]
   end
 
