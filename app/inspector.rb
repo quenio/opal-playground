@@ -42,7 +42,7 @@ class Inspector < Tool
 
   def item_view(item)
     input = Field.new(
-      placeholder: item.name.chop,
+      label: item.name.chop.capitalize,
       non_selectable: true,
       fixed_style_classes: %w[w-auto]
     )
