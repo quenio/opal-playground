@@ -1,9 +1,6 @@
 # frozen_string_literal: true
 
 require 'blocks'
-require 'jquery-3.4.1.min'
-require 'popper'
-require 'bootstrap-sprockets'
 
 $doc = $$.document
 

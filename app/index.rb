@@ -1,5 +1,12 @@
 # frozen_string_literal: true
 
+require 'opal'
+require 'native'
+
+require 'jquery-3.4.1.min'
+require 'popper'
+require 'bootstrap-sprockets'
+
 require 'space'
 require 'sheet'
 require 'palette'
