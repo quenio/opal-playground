@@ -10,3 +10,8 @@ gem 'bootstrap', '~> 4.3.1'
 
 # https://github.com/opal/opal-activesupport
 gem 'opal-activesupport'
+
+group :spec do
+  gem 'rake'
+  gem 'rspec'
+end

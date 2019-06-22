@@ -1,5 +1,7 @@
+# frozen_string_literal: true
+
 require 'bundler'
-Bundler.require
+Bundler.require :default
 
 run Opal::Sprockets::Server.new { |s|
   s.append_path 'app'
