@@ -20,9 +20,23 @@
 #++
 #
 
-class Equation
-  def initialize(left:, right:)
-    @left = left
-    @right = right
+require 'variable'
+require 'expression_parser'
+
+class Model
+  def initialize
+    @variables = {}
+    @constraints = []
+  end
+
+  def find_or_create_variable(name)
+    @variables[name] ||= Variable.new(name)
+  end
+
+  def parse_constraints(text)
+    @parser ||= ExpressionParser.new
+    @constraints = @parser.parse text
   end
 end
+
+$model = Model.new

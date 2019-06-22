@@ -20,16 +20,15 @@
 #++
 #
 
-require 'variable'
+class Equation
+  attr_reader :left, :right
 
-class Model
-  def initialize
-    @variables = {}
+  def initialize(left:, right:)
+    @left = left
+    @right = right
   end
 
-  def find_or_create_variable(name)
-    @variables[name] ||= Variable.new(name)
+  def ==(other)
+    @left == other.left and @right == other.right
   end
 end
-
-$model = Model.new
