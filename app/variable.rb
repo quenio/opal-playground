@@ -22,14 +22,8 @@
 
 require 'observer'
 
-$global = {}
-
 class Variable
   include Observable
-
-  def self.find_or_create(variable_name)
-    $global[variable_name] ||= Variable.new(variable_name)
-  end
 
   attr_reader :name, :value
 

@@ -28,7 +28,7 @@ module Bindable
   end
 
   def variable=(variable_name)
-    @variable = Variable.find_or_create(variable_name)
+    @variable = $space.find_or_create_variable(variable_name)
     @variable&.add_observer self
   end
 

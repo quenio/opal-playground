@@ -27,7 +27,15 @@ class Space < View
   include Resizer
 
   def initialize(params = {})
+    raise 'Space already defined: ' + $space.inspect if $space
+
+    $space = self
     super(params.merge(fixed_style_classes: %w[d-flex vw-100 vh-100]))
+    @variables = {}
     support_resizing
+  end
+
+  def find_or_create_variable(name)
+    @variables[name] ||= Variable.new(name)
   end
 end
