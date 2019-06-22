@@ -20,14 +20,16 @@
 #++
 #
 
-require 'view'
-require 'resizer'
+require 'variable'
 
-class Space < View
-  include Resizer
+class Model
+  def initialize
+    @variables = {}
+  end
 
-  def initialize(params = {})
-    super(params.merge(fixed_style_classes: %w[d-flex vw-100 vh-100]))
-    support_resizing
+  def find_or_create_variable(name)
+    @variables[name] ||= Variable.new(name)
   end
 end
+
+$model = Model.new

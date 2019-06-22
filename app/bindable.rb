@@ -20,7 +20,7 @@
 #++
 #
 
-require 'variable'
+require 'model'
 
 module Bindable
   def variable
@@ -28,7 +28,7 @@ module Bindable
   end
 
   def variable=(variable_name)
-    @variable = $space.find_or_create_variable(variable_name)
+    @variable = $model.find_or_create_variable(variable_name)
     @variable&.add_observer self
   end
 
