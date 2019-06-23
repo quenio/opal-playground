@@ -35,9 +35,26 @@ class Equation
   def initialize(left:, right:)
     @left = left
     @right = right
+
+    @left.add_observer self
+    @right.add_observer self
   end
 
   def ==(other)
     @left == other.left and @right == other.right
+  end
+
+  def update(source)
+    target = if source == @left
+               @right
+             elsif source == @right
+               @left
+             end
+
+    return unless target
+
+    target.delete_observer self
+    target.value = source.value
+    target.add_observer self
   end
 end
