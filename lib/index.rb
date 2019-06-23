@@ -14,6 +14,7 @@ require 'inspector'
 require 'view_spec'
 require 'field'
 require 'text'
+require 'constraint_editor'
 
 items = [
   ViewSpec.new(
