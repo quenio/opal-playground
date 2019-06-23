@@ -23,14 +23,15 @@
 require 'spec_helper'
 
 require 'model'
+require 'equation'
 
-describe ExpressionParser do
+describe Equation do
   describe :parse do
     it 'returns an equation' do
       $model = Model.new
       a = $model.find_or_create_variable('a')
       b = $model.find_or_create_variable('b')
-      result = ExpressionParser.new.parse('a = b')
+      result = Equation.parse('a = b')
       expect(result).to eq [Equation.new(left: a, right: b)]
     end
   end

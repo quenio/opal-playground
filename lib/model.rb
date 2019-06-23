@@ -21,7 +21,7 @@
 #
 
 require 'variable'
-require 'expression_parser'
+require 'equation'
 
 class Model
   def initialize
@@ -34,8 +34,9 @@ class Model
   end
 
   def parse_constraints(text)
-    @parser ||= ExpressionParser.new
-    @constraints = @parser.parse text
+    text.lines.map do |line|
+      @constraints = Equation.parse line
+    end
   end
 end
 

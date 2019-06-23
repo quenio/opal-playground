@@ -21,6 +21,15 @@
 #
 
 class Equation
+  OPERATOR = '='
+
+  def self.parse(line)
+    left, right = line.split(OPERATOR).map(&:strip)
+    left_var = $model.find_or_create_variable(left)
+    right_var = $model.find_or_create_variable(right)
+    [new(left: left_var, right: right_var)]
+  end
+
   attr_reader :left, :right
 
   def initialize(left:, right:)
