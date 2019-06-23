@@ -25,5 +25,10 @@ require 'tool'
 class ConstraintEditor < Tool
   def initialize(params = {})
     super(params.merge(title: 'Constraints'))
+    View.new(
+      tag: 'textarea',
+      fixed_style_classes: %w[w-100 h-100 form-control],
+      parent: View.new(parent: self, fixed_style_classes: %w[mw-100 mh-100 m-1])
+    )
   end
 end
