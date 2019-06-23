@@ -20,14 +20,22 @@
 #++
 #
 
+require 'watcher'
+
 class Equation
+  include Watcher
+
   OPERATOR = '='
 
   def self.parse(line)
     left, right = line.split(OPERATOR).map(&:strip)
+    return nil unless left and right
+    return nil if left.strip.empty?
+    return nil if right.strip.empty?
+
     left_var = $model.find_or_create_variable(left)
     right_var = $model.find_or_create_variable(right)
-    [new(left: left_var, right: right_var)]
+    new(left: left_var, right: right_var)
   end
 
   attr_reader :left, :right
@@ -36,15 +44,14 @@ class Equation
     @left = left
     @right = right
 
-    @left.add_observer self
-    @right.add_observer self
+    start_observing_terms
   end
 
   def ==(other)
     @left == other.left and @right == other.right
   end
 
-  def update(source)
+  def on_update(source)
     target = if source == @left
                @right
              elsif source == @right
@@ -53,8 +60,18 @@ class Equation
 
     return unless target
 
-    target.delete_observer self
     target.value = source.value
-    target.add_observer self
+  end
+
+  def stop_observing_terms
+    @left.delete_observer self
+    @right.delete_observer self
+  end
+
+  private
+
+  def start_observing_terms
+    @left.add_observer self
+    @right.add_observer self
   end
 end

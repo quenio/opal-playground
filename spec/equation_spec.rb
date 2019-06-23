@@ -32,7 +32,7 @@ describe Equation do
       a = $model.find_or_create_variable('a')
       b = $model.find_or_create_variable('b')
       result = Equation.parse('a = b')
-      expect(result).to eq [Equation.new(left: a, right: b)]
+      expect(result).to eq Equation.new(left: a, right: b)
     end
   end
 end

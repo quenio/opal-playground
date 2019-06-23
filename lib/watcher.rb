@@ -20,18 +20,14 @@
 #++
 #
 
-require 'tool'
+module Watcher
+  def update(*args, &block)
+    return if @updating
 
-class ConstraintEditor < Tool
-  def initialize(params = {})
-    super(params.merge(title: 'Constraints'))
-    @editor = View.new(
-      tag: 'textarea',
-      fixed_style_classes: %w[w-100 h-100 form-control],
-      parent: View.new(parent: self, fixed_style_classes: %w[mw-100 mh-100 m-1])
-    )
-    @editor.on 'input' do |event|
-      $model.parse_constraints event.target.value
-    end
+    @updating = true
+
+    on_update(*args, &block)
+  ensure
+    @updating = false
   end
 end

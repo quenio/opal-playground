@@ -34,9 +34,10 @@ class Model
   end
 
   def parse_constraints(text)
-    text.lines.map do |line|
-      @constraints = Equation.parse line
-    end
+    @constraints.each(&:stop_observing_terms)
+    @constraints = text.lines.map do |line|
+      Equation.parse line
+    end.reject(&:nil?)
   end
 end
 
