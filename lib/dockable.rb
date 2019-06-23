@@ -21,6 +21,10 @@
 #
 
 module Dockable
+  def support_docking(params)
+    self.docking_side = params[:docking_side] || :left
+  end
+
   DOCKING_STYLES = {
     right: %w[ml-auto h-100],
     left: %w[mr-auto h-100],

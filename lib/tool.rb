@@ -32,11 +32,10 @@ class Tool < View
   def initialize(params = {})
     super(params)
 
-    self.docking_side = params[:docking_side] || :left
-
     Header.new(parent: self, text: (params[:title] || 'No Title'))
 
     support_resizing
+    support_docking(params)
   end
 
   BORDER_STYLES = {
